@@ -18,9 +18,11 @@
             <span>{{form.errors.fullname}}</span>
         </div>
 
-        <div class="mb-3">
-            <label content="form-label">Born date:</label>
-            <input type="date" class="form-control">
+         <div class="mb-3">
+            <label content="form-label">Born date:
+                {{ form.born_date }}
+            </label>
+            <span>{{form.errors.born_date}}</span>
         </div>
 
         <div class="mb-3">
@@ -31,10 +33,18 @@
             <span>{{form.errors.born_location}}</span>
         </div>
 
-        <div class="form-floating mb-3">
-            <textarea class="form-control mb-3" placeholder="Leave a Description here" id="floatingTextarea"></textarea>
-            <label class="mb-3" for="floatingTextarea">Description</label>
+        <div class="mb-3">
+
+            <label content="form-label">Description
+                {{ form.description}}
+            </label>
+            <span>{{form.errors.description}}</span>
         </div>
+
+<!--        <div class="form-floating mb-3">-->
+<!--            <textarea class="form-control mb-3" placeholder="Leave a Description here" id="floatingTextarea"></textarea>-->
+<!--            <label class="mb-3" for="floatingTextarea">Description</label>-->
+<!--        </div>-->
 
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-secondary">Reset</button>

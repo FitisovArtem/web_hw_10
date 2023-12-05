@@ -12,23 +12,10 @@
         {% csrf_token %}
 
         <div class="mb-3">
-            <label content="form-label">Author
-                {{ form.author_id }}
+            <label content="form-label">Tag Name
+                {{ form.name }}
             </label>
-            <span>{{form.errors.author_id}}</span>
-        </div>
-
-        <div class="mb-3">
-            <label content="form-label">Tags
-                {{ form.tags }}
-            </label>
-            <span>{{form.errors.tags}}</span>
-        </div>
-        <div class="mb-3">
-            <label content="form-label">Quote
-                {{ form.quote }}
-            </label>
-            <span>{{form.errors.quote}}</span>
+            <span>{{form.errors.name}}</span>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

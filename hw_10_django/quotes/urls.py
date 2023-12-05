@@ -6,6 +6,8 @@ app_name = 'quotes'
 urlpatterns = [
     path('', views.main, name='root'),
     path('<int:page>', views.main, name='root_paginate'),
-    path('createAuthor', views.RegisterAuthorView.as_view(), name='createAuthor'),
-    path('createQuote', views.RegisterQuoteView.as_view(), name='createQuote'),
+    path('createAuthor', views.RegisterAuthorView, name='createAuthor'),
+    path('createQuote', views.RegisterQuoteView, name='createQuote'),
+    path('createTag', views.RegisterTagView, name='createTag'),
+    path('tag/<str:t_name>', views.find_tags, name='find_tags'),
 ]
