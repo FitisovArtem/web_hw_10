@@ -13,15 +13,12 @@ def main(request, page=1):
     per_page = 10
     paginator = Paginator(list(quotes), per_page=per_page)
     quotes_on_page = paginator.page(page)
-    # result = models.Quote.objects.raw('select tag_id from quotes_quote_tags as q left join quotes_tag as tag on tag.id = q.tag_id group by q.tag_id order by count(*) desc')
-    tags = models.Tag.objects.all().values()
-    top_t = models.Quote.tags.through.objects.all().values('tag_id', 'tag').annotate(total=Count('tag_id')).order_by('-total')[:10]
+    top_t = models.Quote.objects.values('tags__name', "tags__id") \
+                   .annotate(quote_count=Count('tags__name')) \
+                   .order_by('-quote_count')[:10]
     top_tags = []
     for tag in top_t:
-        print(tag)
-        for t in tags:
-            if tag['tag_id'] == t['id']:
-                top_tags.append([t['name'], tag['total']])
+        top_tags.append(tag['tags__name'])
     return render(request, 'quotes/index.html', context={'quotes': quotes_on_page, 'top_tags': top_tags})
 
 
@@ -75,14 +72,11 @@ def find_tags(request, t_name):
     paginator = Paginator(list(quotes), per_page=per_page)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
-    tags = models.Tag.objects.all().values()
-    top_t = models.Quote.tags.through.objects.all().values('tag_id', 'tag').annotate(total=Count('tag_id')).order_by(
-        '-total')[:10]
+    top_t = models.Quote.objects.values('tags__name', "tags__id") \
+                .annotate(quote_count=Count('tags__name')) \
+                .order_by('-quote_count')[:10]
     top_tags = []
     for tag in top_t:
-        print(tag)
-        for t in tags:
-            if tag['tag_id'] == t['id']:
-                top_tags.append([t['name'], tag['total']])
+        top_tags.append(tag['tags__name'])
     return render(request, 'quotes/index.html', context={'quotes': page_object, 'top_tags': top_tags})
 
