@@ -6,7 +6,7 @@ class CreateAuthorForm(ModelForm):
     fullname = CharField(max_length=50, min_length=3, required=True, widget=TextInput(attrs={'class': 'form-control'}))
     born_date = CharField(max_length=50, required=True, widget=TextInput(attrs={'class': 'form-control'}))
     born_location = CharField(max_length=150, min_length=3, required=True, widget=TextInput(attrs={'class': 'form-control'}))
-    description = CharField(required=True, widget=TextInput(attrs={'class': 'form-control'}))
+    description = CharField(max_length=50000, required=True, widget=TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = models.Author
@@ -17,12 +17,12 @@ class CreateQuoteForm(ModelForm):
     quote = CharField(max_length=60, min_length=3, required=True, widget=TextInput(attrs={'class': 'form-control'}))
     tags = ModelMultipleChoiceField(queryset=models.Tag.objects.all().order_by('name'), required=True,
                                     widget=SelectMultiple(attrs={'class': 'form-control'}))
-    author_id = ModelChoiceField(queryset=models.Author.objects.all().order_by('fullname'),
+    author = ModelChoiceField(queryset=models.Author.objects.all().order_by('fullname'),
                                  widget=Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = models.Quote
-        fields = ['quote', 'tags', 'author_id']
+        fields = ['quote', 'tags', 'author']
 
 
 class CreateTagForm(ModelForm):

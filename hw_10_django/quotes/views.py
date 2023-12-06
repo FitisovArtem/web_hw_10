@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from . import models
 from django.contrib import messages
@@ -13,7 +14,16 @@ def main(request, page=1):
     per_page = 10
     paginator = Paginator(list(quotes), per_page=per_page)
     quotes_on_page = paginator.page(page)
-    top_tags = ['change', 'world', 'life', 'live', 'books']
+    # result = models.Quote.objects.raw('select tag_id from quotes_quote_tags as q left join quotes_tag as tag on tag.id = q.tag_id group by q.tag_id order by count(*) desc')
+    tags = models.Tag.objects.all().values()
+    top_t = models.Quote.tags.through.objects.all().values('tag_id', 'tag').annotate(total=Count('tag_id')).order_by('-total')[:10]
+    top_tags = []
+    for tag in top_t:
+        print(tag)
+        for t in tags:
+            if tag['tag_id'] == t['id']:
+                top_tags.append([t['name'], tag['total']])
+    print(top_tags)
     return render(request, 'quotes/index.html', context={'quotes': quotes_on_page, 'top_tags': top_tags})
 
 
@@ -84,3 +94,4 @@ def find_tags(request, t_name):
     page_object = paginator.get_page(page_number)
     top_tags = ['change', 'world', 'life', 'live', 'books']
     return render(request, 'quotes/index.html', context={'quotes': page_object, 'top_tags': top_tags})
+

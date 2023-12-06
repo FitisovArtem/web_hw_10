@@ -18,6 +18,16 @@ typing-extensions = {version = ">=4", markers = "python_version < \"3.11\""}
 tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
+name = "connect"
+version = "0.2"
+description = "Simple to use IPv6 compatible Internet connection functions"
+optional = false
+python-versions = "*"
+files = [
+    {file = "connect-0.2.tar.gz", hash = "sha256:baa602ccd1c627539f83d55b9c084b5ddab907de887ec80eef74141abee07236"},
+]
+
+[[package]]
 name = "django"
 version = "4.2.7"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -199,4 +209,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "693846cb4cacfa84f5f9c6ea9cd1a693e1635ff20b9e1e312b866e2cd52b406c"
+content-hash = "65cae06b8a8b1e23629b888e36980982e35ad60508967dccbe74f528451bb7d9"
