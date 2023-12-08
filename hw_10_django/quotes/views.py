@@ -2,17 +2,17 @@ from django.core.paginator import Paginator
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from . import models
+from pathlib import Path
 
 from .utils import get_mongodb
 from .forms import CreateAuthorForm, CreateQuoteForm, CreateTagForm
-
 from .scraping.main import parser
 
 
 def main(request, page=1):
     db = get_mongodb()
     quotes = db.quotes.find()
-    per_page = 100
+    per_page = 10
     paginator = Paginator(list(quotes), per_page=per_page)
     quotes_on_page = paginator.page(page)
     top_t = models.Quote.objects.values('tags__name') \
@@ -84,13 +84,17 @@ def find_tags(request, t_name):
 
 
 def scraping(request):
-    print('============================================== START =================================================================')
 
     try:
         parser()
     except Exception as e:
         print(e)
-    print('============================================== END =================================================================')
 
-    template_name = 'quotes/scraping.html'
-    return render(request, template_name)
+    p = Path('./quotes/scraping/data/authors.json')
+    q = Path('./quotes/scraping/data/quotes.json')
+    with open(p, 'r', encoding='utf-8') as f:
+        authors_data = f.read()
+    with open(q, 'r', encoding='utf-8') as f:
+        quotes_data = f.read()
+
+    return render(request, 'quotes/scraping.html', context={'authors_data': authors_data, 'quotes_data': quotes_data})

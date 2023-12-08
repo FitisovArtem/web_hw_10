@@ -1,6 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+from pathlib import Path
 
 BASE_URL = 'http://127.0.0.1:8000'
 authors_url_list = []
@@ -70,15 +71,15 @@ def parse_data_authors(url_page):
 
 
 def main():
+    p = Path('./quotes/scraping/data/authors.json')
+    q = Path('./quotes/scraping/data/quotes.json')
     get_all_pages(BASE_URL)
     for page in all_pages_list:
-        print(page)
-        print(all_pages_list)
         result = parse_data_qoutes(page)
-        with open('hw_10_django/quotes/scraping/data/authors.json', 'a', encoding='utf-8') as file:
+        with open(q, 'a', encoding='utf-8') as file:
             json.dump(result, file, ensure_ascii=False, indent=2)
 
-        with open('hw_10_django/quotes/scraping/data/authors.json', 'a', encoding='utf-8') as file:
+        with open(p, 'a', encoding='utf-8') as file:
             result = []
             for el in authors_url_list:
                 result.append(parse_data_authors(el)[0])

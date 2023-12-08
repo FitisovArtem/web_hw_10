@@ -59,5 +59,9 @@ ul.pager {
     display: block;
     margin: 4px;
 }
+.alert {
+    display: none;
+
+}
 
 

@@ -1,10 +1,13 @@
 import json
+from pathlib import Path
 from mongoengine.errors import NotUniqueError
 from .models import Author, Quote
 
 
 def main():
-    with open('data/authors.json', encoding='utf-8') as fd:
+    p = Path('./quotes/scraping/data/authors.json')
+    q = Path('./quotes/scraping/data/quotes.json')
+    with open(p, encoding='utf-8') as fd:
         data = json.load(fd)
         for el in data:
             try:
@@ -14,7 +17,7 @@ def main():
             except NotUniqueError:
                 print(f"Автор вже існує {el.get('fullname')}")
 
-    with open('data/qoutes.json', encoding='utf-8') as fd:
+    with open(q, encoding='utf-8') as fd:
         data = json.load(fd)
         for el in data:
             author, *_ = Author.objects(fullname=el.get('author'))

@@ -1,9 +1,20 @@
 {% extends 'quotes/base.html' %}
 
 {% block body %}
-    <button class="btn btn-warning" type="button" disabled>
-        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-        <span role="status">Scraping...</span>
-    </button>
 
+    <div class="row">
+        <div class="col">
+            <label>Authors</label>
+            <textarea class="form-control" rows="25">
+                {{ authors_data }}
+            </textarea>
+        </div>
+        <div class="col">
+            <label>Quotes</label>
+            <textarea class="form-control " rows="25">
+                {{ quotes_data }}
+            </textarea>
+
+        </div>
+    </div>
 {% endblock %}

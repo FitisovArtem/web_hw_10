@@ -47,7 +47,7 @@
 
 
             <div class="tag-item">
-                <a class="tag" style="font-size:{{tag.quote_count}}px" href="{% url 'quotes:find_tags' tag %}">
+                <a class="tag" style="font-size:{{tag.quote_count|add:'10'}}px" href="{% url 'quotes:find_tags' tag %}">
 
                 {{tag.tags__name}}
                 </a>

@@ -1,7 +1,6 @@
 from bson import json_util
 from mongoengine import connect, Document, StringField, ReferenceField, ListField, CASCADE
 
-
 connect(db="web16_hw10_add", host="mongodb+srv://artemF_web16:wubmyw-bysroK-0fuwnu@cluster0.94vozhi.mongodb.net/?retryWrites=true&w=majority")
 
 

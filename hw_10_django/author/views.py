@@ -4,7 +4,6 @@ from .utils import get_mongodb
 
 
 def main(request, id_):
-    print(id_)
     db = get_mongodb()
     authors = db.authors.find_one({'fullname': id_})
     return render(request, 'author/index.html', context={'authors': authors})
