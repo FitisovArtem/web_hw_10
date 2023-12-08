@@ -59,17 +59,5 @@ ul.pager {
     display: block;
     margin: 4px;
 }
-.tags-box {
-    text-align: right;
-}
-.tag-item {
-    display: block;
-    margin: 4px;
-}
-.tag {
-    padding: 2px 5px;
-    border-radius: 5px;
-    color: white;
-    font-size: small;
-    background-color: #7CA3E6;
-}
+
+

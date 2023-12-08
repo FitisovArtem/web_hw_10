@@ -6,20 +6,22 @@ from . import models
 from .utils import get_mongodb
 from .forms import CreateAuthorForm, CreateQuoteForm, CreateTagForm
 
+from .scraping.main import parser
+
 
 def main(request, page=1):
     db = get_mongodb()
     quotes = db.quotes.find()
-    per_page = 10
+    per_page = 100
     paginator = Paginator(list(quotes), per_page=per_page)
     quotes_on_page = paginator.page(page)
-    top_t = models.Quote.objects.values('tags__name', "tags__id") \
+    top_t = models.Quote.objects.values('tags__name') \
                    .annotate(quote_count=Count('tags__name')) \
                    .order_by('-quote_count')[:10]
-    top_tags = []
-    for tag in top_t:
-        top_tags.append(tag['tags__name'])
-    return render(request, 'quotes/index.html', context={'quotes': quotes_on_page, 'top_tags': top_tags})
+    # top_tags = []
+    # for tag in top_t:
+    #     top_tags.append(tag['tags__name'])
+    return render(request, 'quotes/index.html', context={'quotes': quotes_on_page, 'top_tags': top_t})
 
 
 def RegisterAuthorView(request):
@@ -80,3 +82,15 @@ def find_tags(request, t_name):
         top_tags.append(tag['tags__name'])
     return render(request, 'quotes/index.html', context={'quotes': page_object, 'top_tags': top_tags})
 
+
+def scraping(request):
+    print('============================================== START =================================================================')
+
+    try:
+        parser()
+    except Exception as e:
+        print(e)
+    print('============================================== END =================================================================')
+
+    template_name = 'quotes/scraping.html'
+    return render(request, template_name)

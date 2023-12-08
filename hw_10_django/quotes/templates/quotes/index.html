@@ -30,7 +30,7 @@
             </li>
 
 
-            <li class="next">
+            <li class="{% if not quotes.has_next %}visually-hidden{% else%}next{% endif %}">
                 <a class="{% if not quotes.has_next %} disabled {% endif %}"
                    href="{% if quotes.has_next %} {% url 'quotes:root_paginate' quotes.next_page_number %} {% else %} # {% endif %}">
                 Next <span aria-hidden="true">→</span></a>
@@ -45,11 +45,11 @@
 
             {% for tag in top_tags %}
 
-            <div class="tag-item">
-<!--                <a class="tag" style="font-size: 28px" href="{% url 'quotes:find_tags' tag %}">-->
-                <a class="tag" style="font-size: 28px" href="{% url 'quotes:find_tags' tag %}">
 
-                {{tag}}
+            <div class="tag-item">
+                <a class="tag" style="font-size:{{tag.quote_count}}px" href="{% url 'quotes:find_tags' tag %}">
+
+                {{tag.tags__name}}
                 </a>
             </div>
 

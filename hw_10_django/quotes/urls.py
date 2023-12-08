@@ -10,4 +10,5 @@ urlpatterns = [
     path('createQuote', views.RegisterQuoteView, name='createQuote'),
     path('createTag', views.RegisterTagView, name='createTag'),
     path('tag/<str:t_name>', views.find_tags, name='find_tags'),
+    path('scraping', views.scraping, name='scraping'),
 ]
